@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1300</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RepairMaster - Ремонтная мастерская</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+    QMainWindow {
+        background-color: #f0f0f0;
+    }
+    QTabWidget::pane {
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border-radius: 5px;
+    }
+    QTabBar::tab {
+        background-color: #e0e0e0;
+        padding: 10px 20px;
+        margin-right: 2px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-weight: bold;
+        color: #000000;
+    }
+    QTabBar::tab:selected {
+        background-color: #3498db;
+        color: #ffffff;
+    }
+    QTabBar::tab:hover:!selected {
+        background-color: #bdc3c7;
+    }
+    QTableView {
+        background-color: #ffffff;
+        alternate-background-color: #f9f9f9;
+        selection-background-color: #3498db;
+        selection-color: #ffffff;
+        gridline-color: #cccccc;
+        font-size: 12px;
+        color: #000000;
+    }
+    QTableView::item {
+        padding: 5px;
+        color: #000000;
+    }
+    QHeaderView::section {
+        background-color: #34495e;
+        color: #ffffff;
+        padding: 8px;
+        font-weight: bold;
+        border: none;
+    }
+
+    /* ========== ОСНОВНОЙ СТИЛЬ КНОПОК ========== */
+    QPushButton {
+        background-color: #3498db;  /* Синий фон */
+        color: white;               /* Белый текст */
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-size: 12px;
+        font-weight: bold;
+        min-width: 100px;
+    }
+    QPushButton:hover {
+        background-color: #2980b9;
+    }
+    QPushButton:pressed {
+        background-color: #1c638e;
+    }
+
+    /* Зеленые кнопки (Добавить, Обновить) */
+    QPushButton#addOrderButton,
+    QPushButton#refreshOrdersButton,
+    QPushButton#addWorkTypeButton,
+    QPushButton#addPerformerButton,
+    QPushButton#addCustomerButton {
+        background-color: #27ae60;
+    }
+    QPushButton#addOrderButton:hover,
+    QPushButton#refreshOrdersButton:hover,
+    QPushButton#addWorkTypeButton:hover,
+    QPushButton#addPerformerButton:hover,
+    QPushButton#addCustomerButton:hover {
+        background-color: #229954;
+    }
+
+    /* Оранжевые кнопки (Поиск, Редактировать) */
+    QPushButton#searchOrdersButton,
+    QPushButton#editOrderButton,
+    QPushButton#editWorkTypeButton,
+    QPushButton#editPerformerButton,
+    QPushButton#editCustomerButton {
+        background-color: #f39c12;
+    }
+    QPushButton#searchOrdersButton:hover,
+    QPushButton#editOrderButton:hover,
+    QPushButton#editWorkTypeButton:hover,
+    QPushButton#editPerformerButton:hover,
+    QPushButton#editCustomerButton:hover {
+        background-color: #e67e22;
+    }
+
+    /* Красные кнопки (Удалить) */
+    QPushButton#deleteOrderButton,
+    QPushButton#deleteWorkTypeButton,
+    QPushButton#deletePerformerButton,
+    QPushButton#deleteCustomerButton {
+        background-color: #e74c3c;
+    }
+    QPushButton#deleteOrderButton:hover,
+    QPushButton#deleteWorkTypeButton:hover,
+    QPushButton#deletePerformerButton:hover,
+    QPushButton#deleteCustomerButton:hover {
+        background-color: #c0392b;
+    }
+
+    /* Серая кнопка (Выход) */
+    QPushButton#logoutButton {
+        background-color: #7f8c8d;
+        font-size: 13px;
+        padding: 10px 25px;
+    }
+    QPushButton#logoutButton:hover {
+        background-color: #6c7a7a;
+    }
+
+    QLineEdit, QComboBox, QDateEdit, QDoubleSpinBox, QTextEdit {
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        padding: 6px;
+        font-size: 12px;
+        min-height: 25px;
+        color: #000000;
+    }
+    QLineEdit:focus, QComboBox:focus, QDateEdit:focus {
+        border: 1px solid #3498db;
+    }
+    QLabel {
+        font-size: 12px;
+        font-weight: bold;
+        color: #000000;
+    }
+    QStatusBar {
+        background-color: #34495e;
+        color: #ffffff;
+    }
+   </string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_main">
+    <property name="spacing">
+     <number>5</number>
+    </property>
+    <property name="leftMargin">
+     <number>10</number>
+    </property>
+    <property name="topMargin">
+     <number>10</number>
+    </property>
+    <property name="rightMargin">
+     <number>10</number>
+    </property>
+    <property name="bottomMargin">
+     <number>10</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="topFrame">
+      <property name="styleSheet">
+       <string>background-color: #34495e; border-radius: 5px;</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_top">
+       <property name="leftMargin">
+        <number>15</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>15</number>
+       </property>
+       <property name="bottomMargin">
+        <number>10</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="logoLabel">
+         <property name="styleSheet">
+          <string>font-size: 24px; font-weight: bold; color: #ffd700;</string>
+         </property>
+         <property name="text">
+          <string>🔧 RepairMaster</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_logo">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="logoutButton">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>🚪 Выход</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="ordersTab">
+       <attribute name="title">
+        <string>📋 Заказы</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_orders">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="searchFrame">
+          <property name="styleSheet">
+           <string>background-color: #e8e8e8; border-radius: 5px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_search">
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="searchLabel">
+             <property name="styleSheet">
+              <string>color: #000000; font-size: 13px; font-weight: bold;</string>
+             </property>
+             <property name="text">
+              <string>🔍 Поиск:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="searchEdit">
+             <property name="styleSheet">
+              <string>background-color: #ffffff; border: 2px solid #f39c12; font-size: 13px;</string>
+             </property>
+             <property name="placeholderText">
+              <string>Номер заказа или описание...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_search">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="searchOrdersButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>🔍 Искать</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableView" name="ordersTableView">
+          <property name="editTriggers">
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="buttonsFrame">
+          <property name="styleSheet">
+           <string>background-color: #e8e8e8; border-radius: 5px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_buttons">
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="addOrderButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>➕ Добавить заказ</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="editOrderButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>✏️ Редактировать</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="deleteOrderButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>🗑️ Удалить</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_buttons">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="refreshOrdersButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>🔄 Обновить</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="workTypesTab">
+       <attribute name="title">
+        <string>🔧 Виды работ</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_worktypes">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QTableView" name="workTypesTableView">
+          <property name="editTriggers">
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="buttonsFrame_worktypes">
+          <property name="styleSheet">
+           <string>background-color: #e8e8e8; border-radius: 5px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_worktypes">
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="addWorkTypeButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>➕ Добавить</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="editWorkTypeButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>✏️ Редактировать</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="deleteWorkTypeButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>🗑️ Удалить</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="performersTab">
+       <attribute name="title">
+        <string>👨‍🔧 Исполнители</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_performers">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QTableView" name="performersTableView">
+          <property name="editTriggers">
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="buttonsFrame_performers">
+          <property name="styleSheet">
+           <string>background-color: #e8e8e8; border-radius: 5px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_performers">
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="addPerformerButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>➕ Добавить</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="editPerformerButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>✏️ Редактировать</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="deletePerformerButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>🗑️ Удалить</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="customersTab">
+       <attribute name="title">
+        <string>👥 Заказчики</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_customers">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QTableView" name="customersTableView">
+          <property name="editTriggers">
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="buttonsFrame_customers">
+          <property name="styleSheet">
+           <string>background-color: #e8e8e8; border-radius: 5px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_customers">
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="addCustomerButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>➕ Добавить</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="editCustomerButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>✏️ Редактировать</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="deleteCustomerButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>🗑️ Удалить</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_customers">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="styleSheet">
+    <string>background-color: #34495e; color: #ffffff;</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
